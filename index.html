@@ -246,7 +246,7 @@
 
 <script>
     // Endpoint generated after saving your Power Automate cloud flow
-    const FLOW_ENDPOINT_URL = "YOUR_POWER_AUTOMATE_HTTP_URL_HERE";
+    const FLOW_ENDPOINT_URL = "https://defaulta5d83123285c489b9a04e4206e9908.1d.environment.api.powerplatform.com:443/powerautomate/automations/direct/workflows/4a6cc8230cc8430db68ba8cf3fa37a52/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=WH5XIWOOVPN38UGeDcx04S6WYPmA20p3APjJypC3Nk4";
 
     // Show/hide sub-sections dynamically
     function toggleField(elementId, show) {
@@ -281,7 +281,7 @@
         };
 
         const processAndSend = (base64Data = "", fileName = "") => {
-            // Precise object architecture mapped 1:1 to SharePoint structure
+            // Precise object architecture mapped 1:1 to Power Automate / SharePoint structure
             const payload = {
                 Name: document.getElementById('q1').value,
                 NationalDistribution: getRadioValue('q2'),
