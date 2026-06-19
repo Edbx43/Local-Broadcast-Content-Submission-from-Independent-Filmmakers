@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Local Broadcast Content Submission from Independent Filmmakers</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background-color: #f3f2f1; color: #323130; margin: 0; padding: 20px; line-height: 1.5; }
+        .form-card { max-width: 680px; background: #ffffff; margin: 20px auto; padding: 40px; border-radius: 8px; box-shadow: 0 4px 16px rgba(0,0,0,0.08); border-top: 4px solid #0078d4; }
+        .header-title { font-size: 24px; color: #0078d4; margin-top: 0; margin-bottom: 15px; font-weight: 600; }
+        .header-desc { font-size: 13px; color: #605e5c; margin-bottom: 25px; text-align: justify; }
+        .theme-list { padding-left: 20px; margin: 10px 0; }
+        .question-block { margin-bottom: 28px; padding-bottom: 15px; }
+        .question-label { display: block; font-weight: 600; font-size: 14px; margin-bottom: 8px; }
+        .required-star { color: #a4262c; margin-left: 3px; }
+        .instruction-text { font-size: 12px; color: #605e5c; margin-bottom: 6px; font-style: italic; }
+        input[type="text"], input[type="tel"], input[type="email"], input[type="url"], input[type="number"], textarea, select { width: 100%; padding: 10px; border: 1px solid #8a8886; border-radius: 4px; box-sizing: border-box; font-size: 14px; background-color: #ffffff; }
+        input:focus, textarea:focus, select:focus { border-color: #0078d4; outline: none; }
+        .radio-group { margin-top: 6px; }
+        .radio-option { display: flex; align-items: center; margin-bottom: 8px; cursor: pointer; font-size: 14px; }
+        .radio-option input { margin-right: 10px; width: 16px; height: 16px; }
+        .conditional-section { display: none; margin-top: 15px; padding-left: 15px; border-left: 3px solid #0078d4; }
+        .file-box { background: #faf9f8; border: 2px dashed #a19f9d; padding: 20px; border-radius: 4px; text-align: center; }
+        button[type="submit"] { background-color: #0078d4; color: #ffffff; border: none; padding: 14px 28px; border-radius: 4px; font-size: 16px; font-weight: 600; cursor: pointer; width: 100%; transition: background-color 0.2s; }
+        button[type="submit"]:hover { background-color: #005a9e; }
+        button[type="submit"]:disabled { background-color: #c8c6c4; cursor: not-allowed; }
+        .status-box { margin-top: 20px; padding: 15px; border-radius: 4px; display: none; font-weight: 600; font-size: 14px; text-align: center; }
+    </style>
+</head>
+<body>
+
+<div class="form-card">
+    <!-- Header Block from image_3aff83.png -->
+    <h1 class="header-title">Local Broadcast Content Submission from Independent Filmmakers</h1>
+    <div class="header-desc">
+        Thank you for your interest! The WNET Group represents the following local stations: Thirteen WNET/NYC (<a href="https://www.thirteen.org" target="_blank">thirteen.org</a>) and WLIW PBS/Long Island (<a href="https://www.wliw.org" target="_blank">wliw.org</a>). The WNET Group will review completed films <u>ONLY</u>, with a preference for content with a local focus. We are looking at independent work that does not have distribution. We are looking primarily for documentaries or biographies that are 30 or 60 minute length. However, we will consider all genres and lengths. Content is Queen! But be aware, it may be turned down because of these criteria.<br><br>
+        We are prioritizing the following themes:
+        <ul class="theme-list">
+            <li>Comedy</li>
+            <li>Environmental/Climate Change</li>
+            <li>Local Cultural History — NJ, NYC, Long Island areas, history and people</li>
+        </ul>
+        <u>Submission Process:</u><br><br>
+        Please be aware that certain fields are "required" and must have an answer for your form to be submitted. Once the Programming Team has received your submission, it will be added to our list of films to consider. The WNET Group receives many submissions from filmmakers and other sources. Please allow us sufficient time to review your project. Unfortunately, we cannot accept every film that comes across our desk, but we will give every submission respect, consideration, and our time. Thank you again for contacting us and continue to tell stories!<br><br>
+        The WNET Group Program Management Team
+    </div>
+
+    <form id="submissionForm">
+        <!-- Field 1 to 8: image_3aff83.png -->
+        <div class="question-block">
+            <label class="question-label" for="q1">1. Name<span class="required-star">*</span></label>
+            <input type="text" id="q1" required>
+        </div>
+
+        <div class="question-block">
+            <label class="question-label">2. Does this show currently have national distribution on public TV?<span class="required-star">*</span></label>
+            <div class="instruction-text">For example, NETA, APT or PBS - We do not accept programs with national distribution.</div>
+            <div class="radio-group">
+                <label class="radio-option"><input type="radio" name="q2" value="Yes" required> Yes</label>
+                <label class="radio-option"><input type="radio" name="q2" value="No"> No</label>
+            </div>
+        </div>
+
+        <div class="question-block">
+            <label class="question-label" for="q3">3. Copyright Holder<span class="required-star">*</span></label>
+            <input type="text" id="q3" required>
+        </div>
+
+        <div class="question-block">
+            <label class="question-label" for="q4">4. Main Contact regarding film<span class="required-star">*</span></label>
+            <div class="instruction-text">If different than applicant name.</div>
+            <input type="text" id="q4" required>
+        </div>
+
+        <div class="question-block">
+            <label class="question-label" for="q5">5. Entity Name<span class="required-star">*</span></label>
+            <input type="text" id="q5" required>
+        </div>
+
+        <div class="question-block">
+            <label class="question-label" for="q6">6. Entity Address<span class="required-star">*</span></label>
+            <input type="text" id="q6" required>
+        </div>
+
+        <div class="question-block">
+            <label class="question-label" for="q7">7. Email<span class="required-star">*</span></label>
+            <input type="email" id="q7" required>
+        </div>
+
+        <div class="question-block">
+            <label class="question-label" for="q8">8. Phone Number<span class="required-star">*</span></label>
+            <input type="tel" id="q8" required>
+        </div>
+
+        <!-- Field 9 to 18: image_3aff61.png -->
+        <div class="question-block">
+            <label class="question-label" for="q9">9. Project Title<span class="required-star">*</span></label>
+            <input type="text" id="q9" required>
+        </div>
+
+        <div class="question-block">
+            <label class="question-label">10. Is this a Series?<span class="required-star">*</span></label>
+            <div class="radio-group">
+                <label class="radio-option"><input type="radio" name="q10" value="Yes" onchange="toggleField('seriesSection', true)" required> Yes</label>
+                <label class="radio-option"><input type="radio" name="q10" value="No" onchange="toggleField('seriesSection', false)"> No</label>
+            </div>
+            <div id="seriesSection" class="conditional-section">
+                <label class="question-label" for="q11">11. Number of episodes.<span class="required-star">*</span></label>
+                <input type="number" id="q11">
+            </div>
+        </div>
+
+        <div class="question-block">
+            <label class="question-label">12. Does Licensor/Co-Producer fully own the Program?<span class="required-star">*</span></label>
+            <div class="radio-group">
+                <label class="radio-option"><input type="radio" name="q12" value="Yes" required> Yes</label>
+                <label class="radio-option"><input type="radio" name="q12" value="No"> No</label>
+            </div>
+        </div>
+
+        <div class="question-block">
+            <label class="question-label" for="q13">13. Please explain.<span class="required-star">*</span></label>
+            <textarea id="q13" rows="3" required></textarea>
+        </div>
+
+        <div class="question-block">
+            <label class="question-label" for="q14">14. Length of Program<span class="required-star">*</span></label>
+            <input type="text" id="q14" required>
+        </div>
+
+        <div class="question-block">
+            <label class="question-label" for="q15">15. Short Description<span class="required-star">*</span></label>
+            <textarea id="q15" rows="4" required></textarea>
+        </div>
+
+        <div class="question-block">
+            <label class="question-label">16. Does this program have non-english language?<span class="required-star">*</span></label>
+            <div class="instruction-text">If the program has Spanish language, we will require Spanish captions</div>
+            <div class="radio-group">
+                <label class="radio-option"><input type="radio" name="q16" value="Yes" onchange="toggleField('languageSection', true)" required> Yes</label>
+                <label class="radio-option"><input type="radio" name="q16" value="No" onchange="toggleField('languageSection', false)"> No</label>
+            </div>
+            <div id="languageSection" class="conditional-section">
+                <label class="question-label" for="q17">17. What language?<span class="required-star">*</span></label>
+                <input type="text" id="q17">
+            </div>
+        </div>
+
+        <div class="question-block">
+            <label class="question-label">18. Are Rights and Clearances cleared?<span class="required-star">*</span></label>
+            <div class="radio-group">
+                <label class="radio-option"><input type="radio" name="q18" value="Yes" required> Yes</label>
+                <label class="radio-option"><input type="radio" name="q18" value="No"> No</label>
+            </div>
+        </div>
+
+        <!-- Field 19 to 27: image_3aff3d.png -->
+        <div class="question-block">
+            <label class="question-label">19. Music Rights Cleared?<span class="required-star">*</span></label>
+            <div class="radio-group">
+                <label class="radio-option"><input type="radio" name="q19" value="Yes" required> Yes</label>
+                <label class="radio-option"><input type="radio" name="q19" value="No"> No</label>
+            </div>
+        </div>
+
+        <div class="question-block">
+            <label class="question-label">20. E&O has been secured?<span class="required-star">*</span></label>
+            <div class="instruction-text">Please be advised without E&O it is possible that your entry may be denied.</div>
+            <div class="radio-group">
+                <label class="radio-option"><input type="radio" name="q20" value="Yes" required> Yes</label>
+                <label class="radio-option"><input type="radio" name="q20" value="No"> No</label>
+            </div>
+        </div>
+
+        <div class="question-block">
+            <label class="question-label" for="q21">21. Screening Link<span class="required-star">*</span></label>
+            <input type="url" id="q21" placeholder="https://" required>
+        </div>
+
+        <div class="question-block">
+            <label class="question-label">22. Production Status<span class="required-star">*</span></label>
+            <div class="radio-group">
+                <label class="radio-option"><input type="radio" name="q22" value="Fine cut" required> Fine cut</label>
+                <label class="radio-option"><input type="radio" name="q22" value="Final"> Final</label>
+            </div>
+        </div>
+
+        <div class="question-block">
+            <label class="question-label">23. Closed Captioned?<span class="required-star">*</span></label>
+            <div class="radio-group">
+                <label class="radio-option"><input type="radio" name="q23" value="Yes" required> Yes</label>
+                <label class="radio-option"><input type="radio" name="q23" value="No"> No</label>
+            </div>
+        </div>
+
+        <div class="question-block">
+            <label class="question-label" for="q24">24. List of Funders<span class="required-star">*</span></label>
+            <div class="instruction-text">Please let us know if the program has underwriters or funders, right none, if none exist.</div>
+            <input type="text" id="q24" required>
+        </div>
+
+        <div class="question-block">
+            <label class="question-label" for="q25">25. Funder contribution amount.<span class="required-star">*</span></label>
+            <div class="instruction-text">Please enter the funder name followed by the amount contributed. Enter N/A for not applicable</div>
+            <textarea id="q25" rows="3" required></textarea>
+        </div>
+
+        <div class="question-block">
+            <label class="question-label" for="q26">26. List any content that may need special attention including language, nudity or violence.<span class="required-star">*</span></label>
+            <textarea id="q26" rows="3" required></textarea>
+        </div>
+
+        <div class="question-block">
+            <label class="question-label">27. Are their any instances of AI in your program?<span class="required-star">*</span></label>
+            <div class="radio-group">
+                <label class="radio-option"><input type="radio" name="q27" value="Yes" onchange="toggleField('aiSection', true)" required> Yes</label>
+                <label class="radio-option"><input type="radio" name="q27" value="No" onchange="toggleField('aiSection', false)"> No</label>
+            </div>
+            <!-- Field 28: image_3aff1e.png (Conditional) -->
+            <div id="aiSection" class="conditional-section">
+                <label class="question-label" for="q28">28. Please list examples of AI instances and timecodes.<span class="required-star">*</span></label>
+                <textarea id="q28" rows="3"></textarea>
+            </div>
+        </div>
+
+        <!-- Field 29: image_3aff1e.png -->
+        <div class="question-block">
+            <label class="question-label" for="q29">29. Comments for the Panel</label>
+            <textarea id="q29" rows="4"></textarea>
+        </div>
+
+        <!-- Teams Storage File Component -->
+        <div class="question-block">
+            <label class="question-label">Treatment / Media Asset Attachment<span class="required-star">*</span></label>
+            <div class="instruction-text">This document will be routed directly to the secure secure Teams storage folder.</div>
+            <div class="file-box">
+                <input type="file" id="fileAttachment" required>
+            </div>
+        </div>
+
+        <button type="submit" id="submitBtn">Submit Content Package</button>
+    </form>
+
+    <div id="statusAlert" class="status-box"></div>
+</div>
+
+<script>
+    // Endpoint generated after saving your Power Automate cloud flow
+    const FLOW_ENDPOINT_URL = "YOUR_POWER_AUTOMATE_HTTP_URL_HERE";
+
+    // Show/hide sub-sections dynamically
+    function toggleField(elementId, show) {
+        const target = document.getElementById(elementId);
+        const input = target.querySelector('input, textarea');
+        if (show) {
+            target.style.display = "block";
+            if(input) input.required = true;
+        } else {
+            target.style.display = "none";
+            if(input) {
+                input.required = false;
+                input.value = "";
+            }
+        }
+    }
+
+    document.getElementById('submissionForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        const submitBtn = document.getElementById('submitBtn');
+        const statusAlert = document.getElementById('statusAlert');
+        const fileInput = document.getElementById('fileAttachment').files[0];
+
+        submitBtn.disabled = true;
+        submitBtn.innerText = "Encoding Asset & Delivering Package...";
+
+        // Extract Radio selections cleanly
+        const getRadioValue = (name) => {
+            const el = document.querySelector(`input[name="${name}"]:checked`);
+            return el ? el.value : "";
+        };
+
+        const processAndSend = (base64Data = "", fileName = "") => {
+            // Precise object architecture mapped 1:1 to SharePoint structure
+            const payload = {
+                Name: document.getElementById('q1').value,
+                NationalDistribution: getRadioValue('q2'),
+                CopyrightHolder: document.getElementById('q3').value,
+                MainContact: document.getElementById('q4').value,
+                EntityName: document.getElementById('q5').value,
+                EntityAddress: document.getElementById('q6').value,
+                Email: document.getElementById('q7').value,
+                PhoneNumber: document.getElementById('q8').value,
+                ProjectTitle: document.getElementById('q9').value,
+                IsSeries: getRadioValue('q10'),
+                NumberOfEpisodes: document.getElementById('q11').value || "N/A",
+                FullyOwnsProgram: getRadioValue('q12'),
+                OwnershipExplanation: document.getElementById('q13').value,
+                LengthOfProgram: document.getElementById('q14').value,
+                ShortDescription: document.getElementById('q15').value,
+                HasNonEnglish: getRadioValue('q16'),
+                WhatLanguage: document.getElementById('q17').value || "N/A",
+                RightsClearances: getRadioValue('q18'),
+                MusicRightsCleared: getRadioValue('q19'),
+                EOSecured: getRadioValue('q20'),
+                ScreeningLink: document.getElementById('q21').value,
+                ProductionStatus: getRadioValue('q22'),
+                ClosedCaptioned: getRadioValue('q23'),
+                ListOfFunders: document.getElementById('q24').value,
+                FunderContributionAmount: document.getElementById('q25').value,
+                ContentSpecialAttention: document.getElementById('q26').value,
+                HasAIInstances: getRadioValue('q27'),
+                AIExamplesTimecodes: document.getElementById('q28').value || "N/A",
+                CommentsForPanel: document.getElementById('q29').value || "None",
+                TeamsFileName: fileName,
+                TeamsFileContentString: base64Data
+            };
+
+            fetch(FLOW_ENDPOINT_URL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            })
+            .then(response => {
+                if (response.ok) {
+                    statusAlert.style.display = "block";
+                    statusAlert.style.backgroundColor = "#d4edda";
+                    statusAlert.style.color = "#155724";
+                    statusAlert.innerText = "Submission successfully transmitted to WNET channels.";
+                    document.getElementById('submissionForm').reset();
+                    // Hide conditional blocks on reset
+                    toggleField('seriesSection', false);
+                    toggleField('languageSection', false);
+                    toggleField('aiSection', false);
+                } else {
+                    throw new Error("Target endpoint dropped transaction processing.");
+                }
+            })
+            .catch(error => {
+                statusAlert.style.display = "block";
+                statusAlert.style.backgroundColor = "#f8d7da";
+                statusAlert.style.color = "#721c24";
+                statusAlert.innerText = "Transmission failure. Connection dropped.";
+                console.error(error);
+            })
+            .finally(() => {
+                submitBtn.disabled = false;
+                submitBtn.innerText = "Submit Content Package";
+                window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+            });
+        };
+
+        if (fileInput) {
+            const reader = new FileReader();
+            reader.readAsDataURL(fileInput);
+            reader.onload = () => {
+                const cleanBase64 = reader.result.split(',')[1];
+                processAndSend(cleanBase64, fileInput.name);
+            };
+            reader.onerror = () => {
+                alert("Critical error parsing file upload block.");
+                submitBtn.disabled = false;
+                submitBtn.innerText = "Submit Content Package";
+            };
+        } else {
+            processAndSend();
+        }
+    });
+</script>
+</body>
+</html>
