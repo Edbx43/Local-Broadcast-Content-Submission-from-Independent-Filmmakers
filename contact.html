@@ -92,9 +92,8 @@
 </div>
 
 <script>
-    // To route this form directly into an inbox, create a standard "When an HTTP request is received" 
-    // Power Automate flow that feeds into a "Send an email (V2)" block, and paste the URL below.
-    const BACKEND_CONTACT_URL = "PASTE_NEW_CONTACT_FLOW_URL_HERE";
+    // Live Support Desk Pipeline Endpoint
+    const BACKEND_CONTACT_URL = "https://defaulta5d83123285c489b9a04e4206e9908.1d.environment.api.powerplatform.com:443/powerautomate/automations/direct/workflows/68861d18adfc4d128182884b31f37727/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=rdsJxkZQouGqMvnwGgBkGMSKhxDlXGndh7Dt93bQiHw";
 
     document.getElementById('contactForm').addEventListener('submit', async (e) => {
         e.preventDefault();
@@ -112,17 +111,6 @@
         contactBtn.innerText = "Submitting...";
 
         try {
-            if (BACKEND_CONTACT_URL === "PASTE_NEW_CONTACT_FLOW_URL_HERE") {
-                // Failsafe if endpoint is not yet configured
-                alertBox.style.display = "block";
-                alertBox.style.backgroundColor = "#fff4ce";
-                alertBox.style.color = "#795c00";
-                alertBox.innerHTML = "System is in static mode. Please use the direct email link below.";
-                contactBtn.disabled = false;
-                contactBtn.innerText = "Submit";
-                return;
-            }
-
             const response = await fetch(BACKEND_CONTACT_URL, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
