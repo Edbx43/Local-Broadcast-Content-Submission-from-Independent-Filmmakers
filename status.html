@@ -5,155 +5,187 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Application Status Portal — WNET Group</title>
     <style>
-        /* Base Body & Background matching the main form */
         body { 
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; 
-            color: #323130; 
-            margin: 0; 
-            padding: 20px; 
-            line-height: 1.5;
+            color: #323130; margin: 0; padding: 20px; line-height: 1.5;
             background-color: #f4f4f9; 
             background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQcVe0281RAF4y_uMsdkp0j9rzTVqbqENCYFQ&s');
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
-            background-repeat: no-repeat;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-            box-sizing: border-box;
+            background-size: cover; background-position: center; background-attachment: fixed;
+            display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; box-sizing: border-box;
         }
 
-        .portal-card { 
-            max-width: 500px; 
-            width: 100%; 
-            background: #ffffff; 
-            padding: 40px; 
-            border-radius: 8px; 
-            box-shadow: 0 4px 16px rgba(0,0,0,0.2); 
-            border-top: 4px solid #0078d4; 
-            box-sizing: border-box;
-        }
-
+        .portal-card { max-width: 550px; width: 100%; background: #ffffff; padding: 40px; border-radius: 8px; box-shadow: 0 4px 16px rgba(0,0,0,0.2); border-top: 4px solid #0078d4; box-sizing: border-box;}
         .title { font-size: 22px; color: #0078d4; margin-top: 0; margin-bottom: 10px; font-weight: 600; text-align: center; }
         .subtitle { font-size: 13px; color: #605e5c; margin-bottom: 25px; text-align: center; }
         
         .input-group { margin-bottom: 20px; }
         label { display: block; font-weight: 600; font-size: 14px; margin-bottom: 8px; }
-        input[type="email"] { width: 100%; padding: 12px; border: 1px solid #8a8886; border-radius: 4px; box-sizing: border-box; font-size: 14px; }
-        input:focus { border-color: #0078d4; outline: none; }
+        input[type="email"], textarea { width: 100%; padding: 12px; border: 1px solid #8a8886; border-radius: 4px; box-sizing: border-box; font-size: 14px; font-family: inherit; }
+        textarea { resize: vertical; }
+        input:focus, textarea:focus { border-color: #0078d4; outline: none; }
 
         button { background-color: #0078d4; color: #ffffff; border: none; padding: 12px 24px; border-radius: 4px; font-size: 14px; font-weight: 600; cursor: pointer; width: 100%; transition: background-color 0.2s; }
         button:hover { background-color: #005a9e; }
         button:disabled { background-color: #c8c6c4; cursor: not-allowed; }
 
-        /* Dynamic Status Display Box */
-        .result-box { 
-            margin-top: 25px; 
-            padding: 20px; 
-            border-radius: 6px; 
-            display: none; 
-            border-left: 4px solid #0078d4;
-            background-color: #f3f2f1;
-        }
-        .result-title { font-weight: 700; font-size: 15px; margin-bottom: 5px; color: #323130; }
-        .status-badge { display: inline-block; padding: 4px 12px; font-weight: 600; border-radius: 20px; font-size: 12px; margin-top: 5px; }
-        
-        /* Status Colors */
-        .status-received { background-color: #dedede; color: #323130; }
-        .status-review { background-color: #c7e0f4; color: #004578; }
-        .status-accepted { background-color: #dff6dd; color: #107c41; }
-        .status-declined { background-color: #fde7e9; color: #a80000; }
+        /* Smooth View Transitions */
+        #searchView, #dashboardView { transition: all 0.3s ease; }
+        #dashboardView { display: none; }
+
+        .meta-info { margin: 15px 0; padding: 12px; background: #faf9f8; border-radius: 4px; font-size: 14px; }
+        .meta-line { margin-bottom: 6px; }
+
+        /* Tailored Status Callouts */
+        .status-banner-notice { padding: 16px; border-radius: 6px; font-weight: 500; font-size: 14px; margin: 20px 0; border-left: 4px solid; }
+        .banner-queue { background-color: #f3f2f1; border-color: #a19f9d; color: #323130; }
+        .banner-review { background-color: #c7e0f4; border-color: #0078d4; color: #004578; }
+        .banner-decision { background-color: #dff6dd; border-color: #107c41; color: #107c41; }
+
+        .comment-section { margin-top: 25px; padding-top: 20px; border-top: 1px solid #edebe9; }
+        .alert-box { display: none; margin-top: 15px; padding: 10px; border-radius: 4px; text-align: center; font-size: 13px; font-weight: 600; }
     </style>
 </head>
 <body>
 
 <div class="portal-card">
-    <h1 class="title">Submission Status Portal</h1>
-    <p class="subtitle">Enter the email address used during your project submission to check its real-time status in the WNET review pipeline.</p>
+    <div id="searchView">
+        <h1 class="title">Submission Status Portal</h1>
+        <p class="subtitle">Enter your submission email address to track your project status in the WNET pipeline.</p>
+        <form id="statusForm">
+            <div class="input-group">
+                <label for="lookupEmail">Registered Email Address</label>
+                <input type="email" id="lookupEmail" placeholder="filmmaker@example.com" required>
+            </div>
+            <button type="submit" id="searchBtn">Query Database</button>
+        </form>
+    </div>
 
-    <form id="statusForm">
-        <div class="input-group">
-            <label Ly for="lookupEmail">Submission Email Address</label>
-            <input type="email" id="lookupEmail" placeholder="filmmaker@example.com" required>
+    <div id="dashboardView">
+        <h1 class="title" style="text-align: left;">Project Dashboard</h1>
+        
+        <div class="meta-info">
+            <div class="meta-line"><strong>Film Title:</strong> <span id="lblTitle">Loading...</span></div>
+            <div class="meta-line"><strong>Applicant Account:</strong> <span id="lblEmail">Loading...</span></div>
         </div>
-        <button type="submit" id="searchBtn">Query Database</button>
-    </form>
 
-    <div id="resultBox" class="result-box">
-        <div class="result-title" id="projectTitle">Project: Loading...</div>
-        <div>Current Status: <span id="statusDisplay" class="status-badge">N/A</span></div>
+        <div id="statusNoticeMessage" class="status-banner-notice"></div>
+
+        <div class="comment-section">
+            <form id="commentForm">
+                <div class="input-group">
+                    <label for="txtComment">Submit an Update or Message to the Panel</label>
+                    <textarea id="txtComment" rows="3" placeholder="Type any project adjustments or comments here..." required></textarea>
+                </div>
+                <button type="submit" id="commentBtn">Transmit Comment Package</button>
+            </form>
+            <div id="commentAlert" class="alert-box"></div>
+        </div>
     </div>
 </div>
 
 <script>
-    // Placeholder URL - We will replace this once we build the backend flow
+    // Paste your primary lookup flow URL inside the quotes below
     const BACKEND_LOOKUP_URL = "YOUR_NEW_POWER_AUTOMATE_LOOKUP_URL_HERE";
+    // Paste your secondary comment flow URL inside the quotes below
+    const BACKEND_COMMENT_URL = "YOUR_POWER_AUTOMATE_COMMENT_SUBMISSION_URL_HERE";
+
+    let activeSharePointItemID = null; 
+    let activeApplicantEmail = "";
 
     document.getElementById('statusForm').addEventListener('submit', async (e) => {
         e.preventDefault();
         const searchBtn = document.getElementById('searchBtn');
-        const resultBox = document.getElementById('resultBox');
-        const projectTitle = document.getElementById('projectTitle');
-        const statusDisplay = document.getElementById('statusDisplay');
         const emailInput = document.getElementById('lookupEmail').value.trim();
 
         searchBtn.disabled = true;
-        searchBtn.innerText = "Searching WNET Registries...";
-        resultBox.style.display = "none";
+        searchBtn.innerText = "Querying WNET Repositories...";
 
         try {
-            // Testing harness logic (Mock data until we wire up the real webhook)
-            if (BACKEND_LOOKUP_URL === "YOUR_NEW_POWER_AUTOMATE_LOOKUP_URL_HERE") {
-                setTimeout(() => {
-                    projectTitle.innerText = "Project: Test Film Title";
-                    statusDisplay.innerText = "Under Review";
-                    statusDisplay.className = "status-badge status-review";
-                    resultBox.style.display = "block";
-                    searchBtn.disabled = false;
-                    searchBtn.innerText = "Query Database";
-                }, 1000);
-                return;
-            }
-
-            // Real Power Automate execution execution block
             const response = await fetch(BACKEND_LOOKUP_URL, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ Email: emailInput })
             });
 
-            if (!response.ok) throw new Error("Record not located.");
-            
+            if (!response.ok) throw new Error("Item Not Found");
             const data = await response.json();
-            
-            // Format layout dynamically based on return payload
-            projectTitle.innerText = `Project: ${data.ProjectTitle}`;
-            statusDisplay.innerText = data.ProductionStatus;
-            
-            // Class switcher based on value matching choice values
-            let lowerStatus = data.ProductionStatus.toLowerCase();
-            if (lowerStatus.includes('received')) statusDisplay.className = "status-badge status-received";
-            else if (lowerStatus.includes('review')) statusDisplay.className = "status-badge status-review";
-            else if (lowerStatus.includes('accepted')) statusDisplay.className = "status-badge status-accepted";
-            else if (lowerStatus.includes('declined')) statusDisplay.className = "status-badge status-declined";
-            else statusDisplay.className = "status-badge status-received";
 
-            resultBox.style.display = "block";
+            // Cache records globally to anchor the subsequent comment module
+            activeSharePointItemID = data.RecordID; 
+            activeApplicantEmail = emailInput;
 
-        } catch (error) {
-            projectTitle.innerText = "No Active Record Found";
-            statusDisplay.innerText = "Unknown Address";
-            statusDisplay.className = "status-badge status-declined";
-            resultBox.style.display = "block";
+            document.getElementById('lblTitle').innerText = data.ProjectTitle || "Untitled Package";
+            document.getElementById('lblEmail').innerText = emailInput;
+
+            const noticeBox = document.getElementById('statusNoticeMessage');
+            let rawStatus = data.ProductionStatus ? data.ProductionStatus.trim().toLowerCase() : "";
+
+            // Mapping Logic Implementation
+            if (!rawStatus) {
+                noticeBox.className = "status-banner-notice banner-queue";
+                noticeBox.innerHTML = "<strong>System Status:</strong> In queue to be reviewed.";
+            } else if (rawStatus === "pending" || rawStatus.includes("review") || rawStatus.includes("cut")) {
+                noticeBox.className = "status-banner-notice banner-review";
+                noticeBox.innerHTML = "<strong>System Status:</strong> We are currently reviewing your application.";
+            } else if (rawStatus === "rejected" || rawStatus === "approved" || rawStatus === "final" || rawStatus === "declined") {
+                noticeBox.className = "status-banner-notice banner-decision";
+                noticeBox.innerHTML = "<strong>System Status:</strong> We have made our decision and will reach out to you shortly.";
+            } else {
+                noticeBox.className = "status-banner-notice banner-queue";
+                noticeBox.innerHTML = `<strong>System Status:</strong> ${data.ProductionStatus}`;
+            }
+
+            // Executive fluid Single Page Application swap
+            document.getElementById('searchView').style.display = "none";
+            document.getElementById('dashboardView').style.display = "block";
+
+        } catch (err) {
+            alert("No matching application registry was located for this address. Please cross-reference your spelling.");
         } finally {
             searchBtn.disabled = false;
             searchBtn.innerText = "Query Database";
         }
     });
-</script>
 
+    // Communication Engine Loop
+    document.getElementById('commentForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const commentBtn = document.getElementById('commentBtn');
+        const alertBox = document.getElementById('commentAlert');
+        const commentText = document.getElementById('txtComment').value.trim();
+
+        commentBtn.disabled = true;
+        commentBtn.innerText = "Encrypting & Transmitting Note...";
+
+        try {
+            const res = await fetch(BACKEND_COMMENT_URL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    RecordID: activeSharePointItemID,
+                    Email: activeApplicantEmail,
+                    Comment: commentText
+                })
+            });
+
+            if (!res.ok) throw new Error();
+
+            alertBox.style.display = "block";
+            alertBox.style.backgroundColor = "#dff6dd";
+            alertBox.style.color = "#107c41";
+            alertBox.innerText = "Comment successfully injected into panel records.";
+            document.getElementById('txtComment').value = "";
+
+        } catch (err) {
+            alertBox.style.display = "block";
+            alertBox.style.backgroundColor = "#fde7e9";
+            alertBox.style.color = "#a80000";
+            alertBox.innerText = "Network execution error. Note dropped.";
+        } finally {
+            commentBtn.disabled = false;
+            commentBtn.innerText = "Transmit Comment Package";
+        }
+    });
+</script>
 </body>
 </html>
