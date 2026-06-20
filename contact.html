@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Support — WNET Group</title>
+    <style>
+        body { 
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; 
+            color: #323130; 
+            margin: 0; 
+            padding: 20px; 
+            line-height: 1.5;
+            background-color: #f4f4f9; 
+            background-image: linear-gradient(rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.65)), url('https://media.istockphoto.com/id/178735930/photo/dramatic-sunset-view-highlighting-the-empire-state-building.jpg?s=612x612&w=0&k=20&c=vvpfw74yLA1H3ieZh3ENSkeukxjpeXJ-Q6AJovigIEo=');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            box-sizing: border-box;
+        }
+
+        .back-link-wrapper { width: 100%; max-width: 550px; margin-bottom: 15px; }
+        .back-link { color: #ffffff; font-size: 14px; text-decoration: none; font-weight: 500; text-shadow: 0 1px 4px rgba(0,0,0,0.5); transition: opacity 0.2s; }
+        .back-link:hover { text-decoration: underline; opacity: 0.8; }
+
+        .form-card { max-width: 550px; width: 100%; background: #ffffff; padding: 40px; border-radius: 8px; box-shadow: 0 4px 16px rgba(0,0,0,0.2); border-top: 4px solid #0078d4; box-sizing: border-box; }
+        .title { font-size: 22px; color: #0078d4; margin-top: 0; margin-bottom: 10px; font-weight: 600; text-align: center; }
+        .subtitle { font-size: 13px; color: #605e5c; margin-bottom: 25px; text-align: center; }
+        
+        .input-group { margin-bottom: 20px; }
+        label { display: block; font-weight: 600; font-size: 14px; margin-bottom: 8px; }
+        input[type="text"], input[type="email"], textarea { width: 100%; padding: 12px; border: 1px solid #8a8886; border-radius: 4px; box-sizing: border-box; font-size: 14px; font-family: inherit; }
+        textarea { resize: vertical; }
+        input:focus, textarea:focus { border-color: #0078d4; outline: none; }
+
+        button { background-color: #0078d4; color: #ffffff; border: none; padding: 12px 24px; border-radius: 4px; font-size: 14px; font-weight: 600; cursor: pointer; width: 100%; transition: background-color 0.2s; }
+        button:hover { background-color: #005a9e; }
+        button:disabled { background-color: #c8c6c4; cursor: not-allowed; }
+
+        .contact-info { margin-top: 25px; padding-top: 20px; border-top: 1px solid #edebe9; text-align: center; font-size: 13px; color: #605e5c; }
+        .contact-info a { color: #0078d4; text-decoration: none; font-weight: 600; }
+        .contact-info a:hover { text-decoration: underline; }
+
+        .alert-box { display: none; margin-top: 15px; padding: 10px; border-radius: 4px; text-align: center; font-size: 13px; font-weight: 600; }
+    </style>
+</head>
+<body>
+
+<div class="back-link-wrapper">
+    <a href="index.html" class="back-link">← Return to Master Gateway</a>
+</div>
+
+<div class="form-card">
+    <h1 class="title">WNET Programming Support</h1>
+    <p class="subtitle">Submit an inquiry regarding your application or general programming questions.</p>
+    
+    <form id="contactForm">
+        <div class="input-group">
+            <label for="contactName">Full Name</label>
+            <input type="text" id="contactName" required>
+        </div>
+
+        <div class="input-group">
+            <label for="contactEmail">Email Address</label>
+            <input type="email" id="contactEmail" required>
+        </div>
+
+        <div class="input-group">
+            <label for="contactSubject">Subject</label>
+            <input type="text" id="contactSubject" required>
+        </div>
+
+        <div class="input-group">
+            <label for="contactMessage">Message</label>
+            <textarea id="contactMessage" rows="5" required></textarea>
+        </div>
+
+        <button type="submit" id="contactBtn">Submit</button>
+    </form>
+
+    <div id="contactAlert" class="alert-box"></div>
+
+    <div class="contact-info">
+        Alternatively, you can reach the Program Management Team directly at <br>
+        <a href="mailto:ProgramManagement@wnet.org">ProgramManagement@wnet.org</a>
+    </div>
+</div>
+
+<script>
+    // To route this form directly into an inbox, create a standard "When an HTTP request is received" 
+    // Power Automate flow that feeds into a "Send an email (V2)" block, and paste the URL below.
+    const BACKEND_CONTACT_URL = "PASTE_NEW_CONTACT_FLOW_URL_HERE";
+
+    document.getElementById('contactForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const contactBtn = document.getElementById('contactBtn');
+        const alertBox = document.getElementById('contactAlert');
+
+        const payload = {
+            Name: document.getElementById('contactName').value.trim(),
+            Email: document.getElementById('contactEmail').value.trim(),
+            Subject: document.getElementById('contactSubject').value.trim(),
+            Message: document.getElementById('contactMessage').value.trim()
+        };
+
+        contactBtn.disabled = true;
+        contactBtn.innerText = "Submitting...";
+
+        try {
+            if (BACKEND_CONTACT_URL === "PASTE_NEW_CONTACT_FLOW_URL_HERE") {
+                // Failsafe if endpoint is not yet configured
+                alertBox.style.display = "block";
+                alertBox.style.backgroundColor = "#fff4ce";
+                alertBox.style.color = "#795c00";
+                alertBox.innerHTML = "System is in static mode. Please use the direct email link below.";
+                contactBtn.disabled = false;
+                contactBtn.innerText = "Submit";
+                return;
+            }
+
+            const response = await fetch(BACKEND_CONTACT_URL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+
+            if (!response.ok) throw new Error();
+
+            alertBox.style.display = "block";
+            alertBox.style.backgroundColor = "#dff6dd";
+            alertBox.style.color = "#107c41";
+            alertBox.innerText = "Message successfully submitted to the support desk.";
+            document.getElementById('contactForm').reset();
+
+        } catch (err) {
+            alertBox.style.display = "block";
+            alertBox.style.backgroundColor = "#fde7e9";
+            alertBox.style.color = "#a80000";
+            alertBox.innerText = "Network execution error. Message dropped.";
+        } finally {
+            contactBtn.disabled = false;
+            contactBtn.innerText = "Submit";
+        }
+    });
+</script>
+</body>
+</html>
