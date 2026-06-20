@@ -84,10 +84,11 @@
 </div>
 
 <script>
-    // Paste your primary lookup flow URL inside the quotes below
-    const BACKEND_LOOKUP_URL = "YOUR_NEW_POWER_AUTOMATE_LOOKUP_URL_HERE";
-    // Paste your secondary comment flow URL inside the quotes below
-    const BACKEND_COMMENT_URL = "YOUR_POWER_AUTOMATE_COMMENT_SUBMISSION_URL_HERE";
+    // Primary Lookup Flow Engine Endpoint URL
+    const BACKEND_LOOKUP_URL = "https://defaulta5d83123285c489b9a04e4206e9908.1d.environment.api.powerplatform.com:443/powerautomate/automations/direct/workflows/da24e8e4bb8549c389268dcdcd18ded6/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=w2-puSVXlvEYeHxDBdiWzXlekmUpzGq1PVGPOa21vxI";
+    
+    // Secondary Comment Submission Flow Endpoint URL 
+    const BACKEND_COMMENT_URL = "https://defaulta5d83123285c489b9a04e4206e9908.1d.environment.api.powerplatform.com:443/powerautomate/automations/direct/workflows/388d10b14c1444d3930b4206c7c28c3a/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=V_BlJ_rzP1336YoeSEOF9LQFc_9vqyIxcSGUwugia24";
 
     let activeSharePointItemID = null; 
     let activeApplicantEmail = "";
