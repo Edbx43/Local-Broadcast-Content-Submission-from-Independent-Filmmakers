@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Application Status Portal — WNET Group</title>
+    <style>
+        /* Base Body & Background matching the main form */
+        body { 
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; 
+            color: #323130; 
+            margin: 0; 
+            padding: 20px; 
+            line-height: 1.5;
+            background-color: #f4f4f9; 
+            background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQcVe0281RAF4y_uMsdkp0j9rzTVqbqENCYFQ&s');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            box-sizing: border-box;
+        }
+
+        .portal-card { 
+            max-width: 500px; 
+            width: 100%; 
+            background: #ffffff; 
+            padding: 40px; 
+            border-radius: 8px; 
+            box-shadow: 0 4px 16px rgba(0,0,0,0.2); 
+            border-top: 4px solid #0078d4; 
+            box-sizing: border-box;
+        }
+
+        .title { font-size: 22px; color: #0078d4; margin-top: 0; margin-bottom: 10px; font-weight: 600; text-align: center; }
+        .subtitle { font-size: 13px; color: #605e5c; margin-bottom: 25px; text-align: center; }
+        
+        .input-group { margin-bottom: 20px; }
+        label { display: block; font-weight: 600; font-size: 14px; margin-bottom: 8px; }
+        input[type="email"] { width: 100%; padding: 12px; border: 1px solid #8a8886; border-radius: 4px; box-sizing: border-box; font-size: 14px; }
+        input:focus { border-color: #0078d4; outline: none; }
+
+        button { background-color: #0078d4; color: #ffffff; border: none; padding: 12px 24px; border-radius: 4px; font-size: 14px; font-weight: 600; cursor: pointer; width: 100%; transition: background-color 0.2s; }
+        button:hover { background-color: #005a9e; }
+        button:disabled { background-color: #c8c6c4; cursor: not-allowed; }
+
+        /* Dynamic Status Display Box */
+        .result-box { 
+            margin-top: 25px; 
+            padding: 20px; 
+            border-radius: 6px; 
+            display: none; 
+            border-left: 4px solid #0078d4;
+            background-color: #f3f2f1;
+        }
+        .result-title { font-weight: 700; font-size: 15px; margin-bottom: 5px; color: #323130; }
+        .status-badge { display: inline-block; padding: 4px 12px; font-weight: 600; border-radius: 20px; font-size: 12px; margin-top: 5px; }
+        
+        /* Status Colors */
+        .status-received { background-color: #dedede; color: #323130; }
+        .status-review { background-color: #c7e0f4; color: #004578; }
+        .status-accepted { background-color: #dff6dd; color: #107c41; }
+        .status-declined { background-color: #fde7e9; color: #a80000; }
+    </style>
+</head>
+<body>
+
+<div class="portal-card">
+    <h1 class="title">Submission Status Portal</h1>
+    <p class="subtitle">Enter the email address used during your project submission to check its real-time status in the WNET review pipeline.</p>
+
+    <form id="statusForm">
+        <div class="input-group">
+            <label Ly for="lookupEmail">Submission Email Address</label>
+            <input type="email" id="lookupEmail" placeholder="filmmaker@example.com" required>
+        </div>
+        <button type="submit" id="searchBtn">Query Database</button>
+    </form>
+
+    <div id="resultBox" class="result-box">
+        <div class="result-title" id="projectTitle">Project: Loading...</div>
+        <div>Current Status: <span id="statusDisplay" class="status-badge">N/A</span></div>
+    </div>
+</div>
+
+<script>
+    // Placeholder URL - We will replace this once we build the backend flow
+    const BACKEND_LOOKUP_URL = "YOUR_NEW_POWER_AUTOMATE_LOOKUP_URL_HERE";
+
+    document.getElementById('statusForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const searchBtn = document.getElementById('searchBtn');
+        const resultBox = document.getElementById('resultBox');
+        const projectTitle = document.getElementById('projectTitle');
+        const statusDisplay = document.getElementById('statusDisplay');
+        const emailInput = document.getElementById('lookupEmail').value.trim();
+
+        searchBtn.disabled = true;
+        searchBtn.innerText = "Searching WNET Registries...";
+        resultBox.style.display = "none";
+
+        try {
+            // Testing harness logic (Mock data until we wire up the real webhook)
+            if (BACKEND_LOOKUP_URL === "YOUR_NEW_POWER_AUTOMATE_LOOKUP_URL_HERE") {
+                setTimeout(() => {
+                    projectTitle.innerText = "Project: Test Film Title";
+                    statusDisplay.innerText = "Under Review";
+                    statusDisplay.className = "status-badge status-review";
+                    resultBox.style.display = "block";
+                    searchBtn.disabled = false;
+                    searchBtn.innerText = "Query Database";
+                }, 1000);
+                return;
+            }
+
+            // Real Power Automate execution execution block
+            const response = await fetch(BACKEND_LOOKUP_URL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ Email: emailInput })
+            });
+
+            if (!response.ok) throw new Error("Record not located.");
+            
+            const data = await response.json();
+            
+            // Format layout dynamically based on return payload
+            projectTitle.innerText = `Project: ${data.ProjectTitle}`;
+            statusDisplay.innerText = data.ProductionStatus;
+            
+            // Class switcher based on value matching choice values
+            let lowerStatus = data.ProductionStatus.toLowerCase();
+            if (lowerStatus.includes('received')) statusDisplay.className = "status-badge status-received";
+            else if (lowerStatus.includes('review')) statusDisplay.className = "status-badge status-review";
+            else if (lowerStatus.includes('accepted')) statusDisplay.className = "status-badge status-accepted";
+            else if (lowerStatus.includes('declined')) statusDisplay.className = "status-badge status-declined";
+            else statusDisplay.className = "status-badge status-received";
+
+            resultBox.style.display = "block";
+
+        } catch (error) {
+            projectTitle.innerText = "No Active Record Found";
+            statusDisplay.innerText = "Unknown Address";
+            statusDisplay.className = "status-badge status-declined";
+            resultBox.style.display = "block";
+        } finally {
+            searchBtn.disabled = false;
+            searchBtn.innerText = "Query Database";
+        }
+    });
+</script>
+
+</body>
+</html>
