@@ -5,8 +5,50 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Local Broadcast Content Submission from Independent Filmmakers</title>
     <style>
-        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background-color: #f3f2f1; color: #323130; margin: 0; padding: 20px; line-height: 1.5; }
-        .form-card { max-width: 680px; background: #ffffff; margin: 20px auto; padding: 40px; border-radius: 8px; box-shadow: 0 4px 16px rgba(0,0,0,0.08); border-top: 4px solid #0078d4; }
+        /* 1. Base Body & Background Image Configuration */
+        body { 
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; 
+            color: #323130; 
+            margin: 0; 
+            padding: 20px; 
+            line-height: 1.5;
+            background-color: #f4f4f9; 
+            background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQcVe0281RAF4y_uMsdkp0j9rzTVqbqENCYFQ&s');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* 2. Summer Pause Banner Styles */
+        .status-banner {
+            background-color: #ffcc00;
+            color: #333;
+            text-align: center;
+            padding: 15px;
+            font-family: Arial, sans-serif;
+            position: relative;
+            border-bottom: 2px solid #e6b800;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 680px;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        .status-banner strong { font-weight: 700; }
+        .status-banner button {
+            position: absolute; right: 15px; top: 50%; transform: translateY(-50%);
+            background: none; border: none; font-size: 18px; font-weight: bold;
+            cursor: pointer; color: #333; transition: color 0.2s ease;
+        }
+        .status-banner button:hover { color: #000; }
+
+        /* 3. Form Container & Interface Styles */
+        .form-card { max-width: 680px; width: 100%; background: #ffffff; margin: 0 auto 20px auto; padding: 40px; border-radius: 8px; box-shadow: 0 4px 16px rgba(0,0,0,0.2); border-top: 4px solid #0078d4; box-sizing: border-box;}
         .header-title { font-size: 24px; color: #0078d4; margin-top: 0; margin-bottom: 15px; font-weight: 600; }
         .header-desc { font-size: 13px; color: #605e5c; margin-bottom: 25px; text-align: justify; }
         .theme-list { padding-left: 20px; margin: 10px 0; }
@@ -25,12 +67,16 @@
         button[type="submit"]:hover { background-color: #005a9e; }
         button[type="submit"]:disabled { background-color: #c8c6c4; cursor: not-allowed; }
         .status-box { margin-top: 20px; padding: 15px; border-radius: 4px; display: none; font-weight: 600; font-size: 14px; text-align: center; }
+        form { background-color: #ffffff; padding: 30px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.2); width: 100%; max-width: 800px; }
     </style>
 </head>
 <body>
-
+<!-- Summer Pause Banner -->
+<div id="pause-banner" class="status-banner">
+    <strong>Notice:</strong> Screening for incoming applications is currently paused for the summer. Submissions will be logged, but review will not commence until the fall cycle.
+    <button onclick="document.getElementById('pause-banner').style.display='none'" aria-label="Close Notice">X</button>
+</div>    
 <div class="form-card">
-    <!-- Header Block from image_3aff83.png -->
     <h1 class="header-title">Local Broadcast Content Submission from Independent Filmmakers</h1>
     <div class="header-desc">
         Thank you for your interest! The WNET Group represents the following local stations: Thirteen WNET/NYC (<a href="https://www.thirteen.org" target="_blank">thirteen.org</a>) and WLIW PBS/Long Island (<a href="https://www.wliw.org" target="_blank">wliw.org</a>). The WNET Group will review completed films <u>ONLY</u>, with a preference for content with a local focus. We are looking at independent work that does not have distribution. We are looking primarily for documentaries or biographies that are 30 or 60 minute length. However, we will consider all genres and lengths. Content is Queen! But be aware, it may be turned down because of these criteria.<br><br>
@@ -46,7 +92,6 @@
     </div>
 
     <form id="submissionForm">
-        <!-- Field 1 to 8: image_3aff83.png -->
         <div class="question-block">
             <label class="question-label" for="q1">1. Name<span class="required-star">*</span></label>
             <input type="text" id="q1" required>
@@ -92,7 +137,6 @@
             <input type="tel" id="q8" required>
         </div>
 
-        <!-- Field 9 to 18: image_3aff61.png -->
         <div class="question-block">
             <label class="question-label" for="q9">9. Project Title<span class="required-star">*</span></label>
             <input type="text" id="q9" required>
@@ -154,7 +198,6 @@
             </div>
         </div>
 
-        <!-- Field 19 to 27: image_3aff3d.png -->
         <div class="question-block">
             <label class="question-label">19. Music Rights Cleared?<span class="required-star">*</span></label>
             <div class="radio-group">
@@ -216,20 +259,17 @@
                 <label class="radio-option"><input type="radio" name="q27" value="Yes" onchange="toggleField('aiSection', true)" required> Yes</label>
                 <label class="radio-option"><input type="radio" name="q27" value="No" onchange="toggleField('aiSection', false)"> No</label>
             </div>
-            <!-- Field 28: image_3aff1e.png (Conditional) -->
             <div id="aiSection" class="conditional-section">
                 <label class="question-label" for="q28">28. Please list examples of AI instances and timecodes.<span class="required-star">*</span></label>
                 <textarea id="q28" rows="3"></textarea>
             </div>
         </div>
 
-        <!-- Field 29: image_3aff1e.png -->
         <div class="question-block">
             <label class="question-label" for="q29">29. Comments for the Panel</label>
             <textarea id="q29" rows="4"></textarea>
         </div>
 
-        <!-- Teams Storage File Component -->
         <div class="question-block">
             <label class="question-label">Treatment / Media Asset Attachment<span class="required-star">*</span></label>
             <div class="instruction-text">This document will be routed directly to the secure secure Teams storage folder.</div>
@@ -245,10 +285,8 @@
 </div>
 
 <script>
-    // Endpoint generated after saving your Power Automate cloud flow
     const FLOW_ENDPOINT_URL = "https://defaulta5d83123285c489b9a04e4206e9908.1d.environment.api.powerplatform.com:443/powerautomate/automations/direct/workflows/4a6cc8230cc8430db68ba8cf3fa37a52/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=WH5XIWOOVPN38UGeDcx04S6WYPmA20p3APjJypC3Nk4";
 
-    // Show/hide sub-sections dynamically
     function toggleField(elementId, show) {
         const target = document.getElementById(elementId);
         const input = target.querySelector('input, textarea');
@@ -274,14 +312,12 @@
         submitBtn.disabled = true;
         submitBtn.innerText = "Encoding Asset & Delivering Package...";
 
-        // Extract Radio selections cleanly
         const getRadioValue = (name) => {
             const el = document.querySelector(`input[name="${name}"]:checked`);
             return el ? el.value : "";
         };
 
         const processAndSend = (base64Data = "", fileName = "") => {
-            // Precise object architecture mapped 1:1 to Power Automate / SharePoint structure
             const payload = {
                 Name: document.getElementById('q1').value,
                 NationalDistribution: getRadioValue('q2'),
@@ -328,7 +364,6 @@
                     statusAlert.style.color = "#155724";
                     statusAlert.innerText = "Submission successfully transmitted to WNET channels.";
                     document.getElementById('submissionForm').reset();
-                    // Hide conditional blocks on reset
                     toggleField('seriesSection', false);
                     toggleField('languageSection', false);
                     toggleField('aiSection', false);
