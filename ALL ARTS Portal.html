@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ALL ARTS Portal</title>
+    <style>
+        body { 
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; 
+            margin: 0; padding: 20px; min-height: 100vh; box-sizing: border-box;
+            
+            /* Background image configuration using local repository file */
+            background-image: linear-gradient(rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.65)), 
+                             url('image_9e747c.jpg');
+            background-size: cover; 
+            background-position: center; 
+            background-attachment: fixed;
+            
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+        }
+
+        .gateway-container { 
+            max-width: 500px; width: 100%; text-align: center; box-sizing: border-box; padding: 20px;
+        }
+
+        .main-title { 
+            font-size: 28px; 
+            color: #FFD700; 
+            font-weight: 800; letter-spacing: 1.5px; margin-bottom: 35px; text-shadow: 0 2px 8px rgba(0,0,0,0.7);
+        }
+
+        .navigation-stack { display: flex; flex-direction: column; gap: 16px; }
+
+        .gateway-btn { 
+            background-color: #0078d4; 
+            color: #ffffff; text-decoration: none; display: block;
+            padding: 16px 24px; border-radius: 6px; font-size: 15px; font-weight: 600; 
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.1);
+            transition: transform 0.15s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .gateway-btn:hover { 
+            background-color: #005a9e; transform: translateY(-2px); box-shadow: 0 6px 16px rgba(0,0,0,0.4);
+        }
+        .gateway-btn:active { transform: translateY(0); box-shadow: 0 2px 8px rgba(0,0,0,0.3); }
+    </style>
+</head>
+<body>
+
+<div class="gateway-container">
+    <h1 class="main-title">ALL ARTS PORTAL</h1>
+    
+    <div class="navigation-stack">
+        <a href="form.html" class="gateway-btn">Form</a>
+        
+        <a href="status.html" class="gateway-btn">Check Status</a>
+        
+        <a href="contact.html" class="gateway-btn">Contact Us</a>
+    </div>
+</div>
+
+</body>
+</html>
