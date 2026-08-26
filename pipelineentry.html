@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pipeline Title Entry Form</title>
+    <style>
+        /* Base Body & Background Image Configuration */
+        body { 
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; 
+            color: #323130; 
+            margin: 0; 
+            padding: 20px; 
+            line-height: 1.5;
+            background-color: #f4f4f9; 
+            background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('background.webp');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .form-card { max-width: 680px; width: 100%; background: #ffffff; margin: 0 auto 20px auto; padding: 40px; border-radius: 8px; box-shadow: 0 4px 16px rgba(0,0,0,0.2); border-top: 4px solid #0078d4; box-sizing: border-box;}
+        .header-title { font-size: 24px; color: #0078d4; margin-top: 0; margin-bottom: 15px; font-weight: 600; text-align: center; }
+        .header-desc { font-size: 13px; color: #605e5c; margin-bottom: 25px; text-align: justify; }
+        .question-block { margin-bottom: 28px; padding-bottom: 15px; }
+        .question-label { display: block; font-weight: 600; font-size: 14px; margin-bottom: 8px; }
+        .required-star { color: #a4262c; margin-left: 3px; }
+        .instruction-text { font-size: 12px; color: #605e5c; margin-bottom: 6px; font-style: italic; }
+        
+        input[type="text"], input[type="number"], input[type="time"], textarea, select { width: 100%; padding: 10px; border: 1px solid #8a8886; border-radius: 4px; box-sizing: border-box; font-size: 14px; background-color: #ffffff; }
+        input:focus, textarea:focus, select:focus { border-color: #0078d4; outline: none; }
+        
+        .radio-group { margin-top: 6px; }
+        .radio-option { display: flex; align-items: center; margin-bottom: 8px; cursor: pointer; font-size: 14px; }
+        .radio-option input { margin-right: 10px; width: 16px; height: 16px; }
+        
+        .date-group { display: flex; gap: 10px; }
+        .date-group > div { flex: 1; }
+        
+        button[type="submit"] { background-color: #0078d4; color: #ffffff; border: none; padding: 14px 28px; border-radius: 4px; font-size: 16px; font-weight: 600; cursor: pointer; width: 100%; transition: background-color 0.2s; }
+        button[type="submit"]:hover { background-color: #005a9e; }
+        button[type="submit"]:disabled { background-color: #c8c6c4; cursor: not-allowed; }
+        .status-box { margin-top: 20px; padding: 15px; border-radius: 4px; display: none; font-weight: 600; font-size: 14px; text-align: center; }
+    </style>
+</head>
+<body>
+
+<div class="form-card">
+    <h1 class="header-title">Pipeline Title Entry Form</h1>
+    <div class="header-desc">
+        Complete the fields below to submit a new title to the programming pipeline. 
+    </div>
+
+    <form id="pipelineForm">
+        <div class="question-block">
+            <label class="question-label" for="title">1. Title<span class="required-star">*</span></label>
+            <input type="text" id="title" required>
+        </div>
+
+        <div class="question-block">
+            <label class="question-label" for="description">2. Description<span class="required-star">*</span></label>
+            <textarea id="description" rows="4" required></textarea>
+        </div>
+
+        <div class="question-block">
+            <label class="question-label">3. Channel<span class="required-star">*</span></label>
+            <div class="radio-group">
+                <label class="radio-option"><input type="radio" name="channel" value="WLIW" required> WLIW</label>
+                <label class="radio-option"><input type="radio" name="channel" value="ALL ARTS"> ALL ARTS</label>
+                <label class="radio-option"><input type="radio" name="channel" value="Thirteen"> Thirteen</label>
+            </div>
+        </div>
+
+        <div class="question-block">
+            <label class="question-label" for="priorityMonth">4. Priority Month<span class="required-star">*</span></label>
+            <select id="priorityMonth" required>
+                <option value="" disabled selected>Select a month...</option>
+                <option value="January">January</option>
+                <option value="February">February</option>
+                <option value="March">March</option>
+                <option value="April">April</option>
+                <option value="May">May</option>
+                <option value="June">June</option>
+                <option value="July">July</option>
+                <option value="August">August</option>
+                <option value="September">September</option>
+                <option value="October">October</option>
+                <option value="November">November</option>
+                <option value="December">December</option>
+            </select>
+        </div>
+
+        <div class="question-block">
+            <label class="question-label">5. Broadcast Date<span class="required-star">*</span></label>
+            <div class="date-group">
+                <div>
+                    <label class="instruction-text" for="bYear">Year</label>
+                    <input type="number" id="bYear" placeholder="YYYY" min="2024" max="2035" required>
+                </div>
+                <div>
+                    <label class="instruction-text" for="bMonth">Month</label>
+                    <select id="bMonth" required>
+                        <option value="" disabled selected>MM</option>
+                        <option value="01">01 - Jan</option>
+                        <option value="02">02 - Feb</option>
+                        <option value="03">03 - Mar</option>
+                        <option value="04">04 - Apr</option>
+                        <option value="05">05 - May</option>
+                        <option value="06">06 - Jun</option>
+                        <option value="07">07 - Jul</option>
+                        <option value="08">08 - Aug</option>
+                        <option value="09">09 - Sep</option>
+                        <option value="10">10 - Oct</option>
+                        <option value="11">11 - Nov</option>
+                        <option value="12">12 - Dec</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="instruction-text" for="bDay">Day</label>
+                    <input type="number" id="bDay" placeholder="DD" min="1" max="31" required>
+                </div>
+            </div>
+        </div>
+
+        <div class="question-block">
+            <label class="question-label" for="bTime">6. Broadcast Time<span class="required-star">*</span></label>
+            <input type="time" id="bTime" required>
+        </div>
+
+        <button type="submit" id="submitBtn">Submit Pipeline Entry</button>
+    </form>
+
+    <div id="statusAlert" class="status-box"></div>
+</div>
+
+<script>
+    // Ensure this endpoint matches your specific Power Automate flow for the Pipeline list
+    const FLOW_ENDPOINT_URL = "https://defaulta5d83123285c489b9a04e4206e9908.1d.environment.api.powerplatform.com:443/powerautomate/automations/direct/workflows/4a6cc8230cc8430db68ba8cf3fa37a52/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=WH5XIWOOVPN38UGeDcx04S6WYPmA20p3APjJypC3Nk4";
+
+    document.getElementById('pipelineForm').addEventListener('submit', (e) => {
+        e.preventDefault();
+        
+        const submitBtn = document.getElementById('submitBtn');
+        const statusAlert = document.getElementById('statusAlert');
+
+        submitBtn.disabled = true;
+        submitBtn.innerText = "Transmitting Data...";
+
+        const getRadioValue = (name) => {
+            const el = document.querySelector(`input[name="${name}"]:checked`);
+            return el ? el.value : "";
+        };
+
+        const payload = {
+            Title: document.getElementById('title').value,
+            Description: document.getElementById('description').value,
+            Channel: getRadioValue('channel'),
+            PriorityMonth: document.getElementById('priorityMonth').value,
+            BroadcastYear: document.getElementById('bYear').value,
+            BroadcastMonth: document.getElementById('bMonth').value,
+            BroadcastDay: document.getElementById('bDay').value,
+            BroadcastTime: document.getElementById('bTime').value
+        };
+
+        fetch(FLOW_ENDPOINT_URL, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+        })
+        .then(response => {
+            if (response.ok) {
+                statusAlert.style.display = "block";
+                statusAlert.style.backgroundColor = "#d4edda";
+                statusAlert.style.color = "#155724";
+                statusAlert.innerText = "Pipeline entry successfully transmitted.";
+                document.getElementById('pipelineForm').reset();
+            } else {
+                throw new Error("Target endpoint dropped transaction processing.");
+            }
+        })
+        .catch(error => {
+            statusAlert.style.display = "block";
+            statusAlert.style.backgroundColor = "#f8d7da";
+            statusAlert.style.color = "#721c24";
+            statusAlert.innerText = "Transmission failure. Connection dropped.";
+            console.error(error);
+        })
+        .finally(() => {
+            submitBtn.disabled = false;
+            submitBtn.innerText = "Submit Pipeline Entry";
+        });
+    });
+</script>
+</body>
+</html>
