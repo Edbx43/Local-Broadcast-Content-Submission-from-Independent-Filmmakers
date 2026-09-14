@@ -28,35 +28,9 @@
         .back-link { color: #ffffff; font-size: 14px; text-decoration: none; font-weight: 500; text-shadow: 0 1px 4px rgba(0,0,0,0.5); transition: opacity 0.2s; }
         .back-link:hover { text-decoration: underline; opacity: 0.8; }
 
-        /* 2. Summer Pause Banner Styles */
-        .status-banner {
-            background-color: #ffcc00;
-            color: #333;
-            text-align: center;
-            padding: 15px;
-            font-family: Arial, sans-serif;
-            position: relative;
-            border-bottom: 2px solid #e6b800;
-            margin-bottom: 20px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            width: 100%;
-            max-width: 680px;
-            border-radius: 4px;
-            box-sizing: border-box;
-        }
-        .status-banner strong { font-weight: 700; }
-        .status-banner button {
-            position: absolute; right: 15px; top: 50%; transform: translateY(-50%);
-            background: none; border: none; font-size: 18px; font-weight: bold;
-            cursor: pointer; color: #333; transition: color 0.2s ease;
-        }
-        .status-banner button:hover { color: #000; }
-
         /* 3. Form Container & Interface Styles */
         .form-card { max-width: 680px; width: 100%; background: #ffffff; margin: 0 auto 20px auto; padding: 40px; border-radius: 8px; box-shadow: 0 4px 16px rgba(0,0,0,0.2); border-top: 4px solid #0078d4; box-sizing: border-box;}
-        .header-title { font-size: 24px; color: #0078d4; margin-top: 0; margin-bottom: 15px; font-weight: 600; }
-        .header-desc { font-size: 13px; color: #605e5c; margin-bottom: 25px; text-align: justify; }
-        .theme-list { padding-left: 20px; margin: 10px 0; }
+        .header-title { font-size: 24px; color: #0078d4; margin-top: 0; margin-bottom: 25px; font-weight: 600; }
         .question-block { margin-bottom: 28px; padding-bottom: 15px; }
         .question-label { display: block; font-weight: 600; font-size: 14px; margin-bottom: 8px; }
         .required-star { color: #a4262c; margin-left: 3px; }
@@ -77,28 +51,11 @@
 <body>
 
 <div class="back-link-wrapper">
-    <a href="index.html" class="back-link">← Return to Master Gateway</a>
+    <a href="index.html" class="back-link">← Homepage</a>
 </div>
-
-<div id="pause-banner" class="status-banner">
-    <strong>Notice:</strong> Screening for incoming applications is currently paused for the summer. Submissions will be logged, but review will not commence until October 1, 2026.
-    <button onclick="document.getElementById('pause-banner').style.display='none'" aria-label="Close Notice">X</button>
-</div>    
 
 <div class="form-card">
     <h1 class="header-title">Local Broadcast Content Submission from Independent Filmmakers</h1>
-    <div class="header-desc">
-        Thank you for your interest! The WNET Group represents the following local stations: Thirteen WNET/NYC (<a href="https://www.thirteen.org" target="_blank">thirteen.org</a>) and WLIW PBS/Long Island (<a href="https://www.wliw.org" target="_blank">wliw.org</a>). The WNET Group will review completed films <u>ONLY</u>, with a preference for content with a local focus. We are looking at independent work that does not have distribution. We are looking primarily for documentaries or biographies that are 30 or 60 minute length. However, we will consider all genres and lengths. Content is Queen! But be aware, it may be turned down because of these criteria.<br><br>
-        We are prioritizing the following themes:
-        <ul class="theme-list">
-            <li>Comedy</li>
-            <li>Environmental/Climate Change</li>
-            <li>Local Cultural History — NJ, NYC, Long Island areas, history and people</li>
-        </ul>
-        <u>Submission Process:</u><br><br>
-        Please be aware that certain fields are "required" and must have an answer for your form to be submitted. Once the Programming Team has received your submission, it will be added to our list of films to consider. The WNET Group receives many submissions from filmmakers and other sources. Please allow us sufficient time to review your project. Unfortunately, we cannot accept every film that comes across our desk, but we will give every submission respect, consideration, and our time. Thank you again for contacting us and continue to tell stories!<br><br>
-        The WNET Group Program Management Team
-    </div>
 
     <form id="submissionForm">
         <div class="question-block">
