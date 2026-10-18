@@ -32,14 +32,13 @@
         button:hover { background-color: #005a9e; }
         button:disabled { background-color: #c8c6c4; cursor: not-allowed; }
 
-        /* Smooth View Transitions */
         #searchView, #dashboardView { transition: all 0.3s ease; }
         #dashboardView { display: none; }
 
         .meta-info { margin: 15px 0; padding: 12px; background: #faf9f8; border-radius: 4px; font-size: 14px; }
-        .meta-line { margin-bottom: 6px; }
+        .meta-line { margin-bottom: 8px; }
+        select { padding: 8px; border: 1px solid #8a8886; border-radius: 4px; font-size: 14px; font-family: inherit; width: 100%; max-width: 350px; margin-top: 4px; }
 
-        /* Tailored Status Callouts */
         .status-banner-notice { padding: 16px; border-radius: 6px; font-weight: 500; font-size: 14px; margin: 20px 0; border-left: 4px solid; }
         .banner-queue { background-color: #f3f2f1; border-color: #a19f9d; color: #323130; }
         .banner-review { background-color: #c7e0f4; border-color: #0078d4; color: #004578; }
@@ -72,8 +71,13 @@
         <h1 class="title" style="text-align: left;">Project Dashboard</h1>
         
         <div class="meta-info">
-            <div class="meta-line"><strong>Film Title:</strong> <span id="lblTitle">Loading...</span></div>
-            <div class="meta-line"><strong>Applicant Account:</strong> <span id="lblEmail">Loading...</span></div>
+            <div class="meta-line">
+                <strong>Applicant Account:</strong> <span id="lblEmail">Loading...</span>
+            </div>
+            <div class="meta-line">
+                <label for="projectDropdown" style="display:inline; font-weight:bold;">Select Film Title:</label><br>
+                <select id="projectDropdown"></select>
+            </div>
         </div>
 
         <div id="statusNoticeMessage" class="status-banner-notice"></div>
@@ -92,10 +96,7 @@
 </div>
 
 <script>
-    // Primary Lookup Flow Engine Endpoint URL
     const BACKEND_LOOKUP_URL = "https://defaulta5d83123285c489b9a04e4206e9908.1d.environment.api.powerplatform.com:443/powerautomate/automations/direct/workflows/da24e8e4bb8549c389268dcdcd18ded6/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=w2-puSVXlvEYeHxDBdiWzXlekmUpzGq1PVGPOa21vxI";
-    
-    // Secondary Comment Submission Flow Endpoint URL 
     const BACKEND_COMMENT_URL = "https://defaulta5d83123285c489b9a04e4206e9908.1d.environment.api.powerplatform.com:443/powerautomate/automations/direct/workflows/388d10b14c1444d3930b4206c7c28c3a/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=V_BlJ_rzP1336YoeSEOF9LQFc_9vqyIxcSGUwugia24";
 
     let activeSharePointItemID = null; 
@@ -119,32 +120,49 @@
             if (!response.ok) throw new Error("Item Not Found");
             const data = await response.json();
 
-            // Cache records globally to anchor the subsequent comment module
-            activeSharePointItemID = data.RecordID; 
-            activeApplicantEmail = emailInput;
-
-            document.getElementById('lblTitle').innerText = data.ProjectTitle || "Untitled Package";
-            document.getElementById('lblEmail').innerText = emailInput;
-
-            const noticeBox = document.getElementById('statusNoticeMessage');
-            let rawStatus = data.ProductionStatus ? data.ProductionStatus.trim().toLowerCase() : "";
-
-            // Mapping Logic Implementation
-            if (!rawStatus) {
-                noticeBox.className = "status-banner-notice banner-queue";
-                noticeBox.innerHTML = "<strong>System Status:</strong> In queue to be reviewed.";
-            } else if (rawStatus === "pending" || rawStatus.includes("review") || rawStatus.includes("cut")) {
-                noticeBox.className = "status-banner-notice banner-review";
-                noticeBox.innerHTML = "<strong>System Status:</strong> We are currently reviewing your application.";
-            } else if (rawStatus === "rejected" || rawStatus === "approved" || rawStatus === "final" || rawStatus === "declined") {
-                noticeBox.className = "status-banner-notice banner-decision";
-                noticeBox.innerHTML = "<strong>System Status:</strong> We have made our decision and will reach out to you shortly.";
-            } else {
-                noticeBox.className = "status-banner-notice banner-queue";
-                noticeBox.innerHTML = `<strong>System Status:</strong> ${data.ProductionStatus}`;
+            if (!data.Projects || data.Projects.length === 0) {
+                throw new Error("No projects found under this email.");
             }
 
-            // Executive fluid Single Page Application swap
+            activeApplicantEmail = emailInput;
+            document.getElementById('lblEmail').innerText = emailInput;
+
+            const dropdown = document.getElementById('projectDropdown');
+            dropdown.innerHTML = ""; 
+
+            data.Projects.forEach(proj => {
+                let opt = document.createElement('option');
+                opt.value = proj.ID;
+                opt.text = proj.Title || "Untitled Package";
+                opt.dataset.status = proj.Status || "";
+                dropdown.appendChild(opt);
+            });
+
+            const noticeBox = document.getElementById('statusNoticeMessage');
+
+            function renderStatus() {
+                const selected = dropdown.options[dropdown.selectedIndex];
+                activeSharePointItemID = selected.value;
+                let rawStatus = selected.dataset.status.trim().toLowerCase();
+
+                if (!rawStatus) {
+                    noticeBox.className = "status-banner-notice banner-queue";
+                    noticeBox.innerHTML = "<strong>System Status:</strong> In queue to be reviewed.";
+                } else if (rawStatus === "pending" || rawStatus.includes("review") || rawStatus.includes("cut")) {
+                    noticeBox.className = "status-banner-notice banner-review";
+                    noticeBox.innerHTML = "<strong>System Status:</strong> We are currently reviewing your application.";
+                } else if (rawStatus === "rejected" || rawStatus === "approved" || rawStatus === "final" || rawStatus === "declined") {
+                    noticeBox.className = "status-banner-notice banner-decision";
+                    noticeBox.innerHTML = "<strong>System Status:</strong> We have made our decision and will reach out to you shortly.";
+                } else {
+                    noticeBox.className = "status-banner-notice banner-queue";
+                    noticeBox.innerHTML = `<strong>System Status:</strong> ${selected.dataset.status}`;
+                }
+            }
+
+            dropdown.addEventListener('change', renderStatus);
+            renderStatus(); 
+
             document.getElementById('searchView').style.display = "none";
             document.getElementById('dashboardView').style.display = "block";
 
@@ -156,7 +174,6 @@
         }
     });
 
-    // Communication Engine Loop
     document.getElementById('commentForm').addEventListener('submit', async (e) => {
         e.preventDefault();
         const commentBtn = document.getElementById('commentBtn');
