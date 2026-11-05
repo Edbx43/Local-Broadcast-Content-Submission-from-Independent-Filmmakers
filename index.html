@@ -18,59 +18,60 @@
             display: flex; flex-direction: column; align-items: center; justify-content: center;
         }
 
-        @keyframes slideUpBanner {
-            0% { transform: translateY(100%); opacity: 0; }
+        @keyframes slideDownBanner {
+            0% { transform: translateY(-100%); opacity: 0; }
             100% { transform: translateY(0); opacity: 1; }
         }
 
         /* Professional Animated Notification Banner */
         .professional-banner {
             position: fixed;
-            bottom: 0;
+            top: 0;
             left: 0;
             width: 100%;
-            background-color: #ffffff;
-            color: #323130;
+            background-color: #FFD700;
+            color: #CC0000;
             padding: 16px 20px;
             font-size: 14px;
-            box-shadow: 0 -4px 12px rgba(0,0,0,0.15);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
             display: flex;
             justify-content: center;
             align-items: center;
             z-index: 1000;
             box-sizing: border-box;
-            border-top: 3px solid #cc0000;
+            border-bottom: 3px solid #990000;
             
-            transform: translateY(100%);
+            transform: translateY(-100%);
             opacity: 0;
-            animation: slideUpBanner 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.5s forwards;
+            animation: slideDownBanner 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.5s forwards;
         }
 
         .professional-banner span {
             margin-right: 20px;
-            font-weight: 500;
+            font-weight: 600;
         }
 
         .professional-banner strong {
-            color: #cc0000;
-            font-weight: 700;
+            color: #990000;
+            font-weight: 900;
             margin-right: 4px;
         }
 
         .close-banner-btn {
             background: transparent;
             border: none;
-            color: #605e5c;
+            color: #CC0000;
             font-size: 16px;
             cursor: pointer;
             padding: 0;
             transition: color 0.2s;
             display: flex;
             align-items: center;
+            font-weight: bold;
         }
 
         .close-banner-btn:hover {
-            color: #000000;
+            color: #990000;
         }
 
         .gateway-container { 
@@ -121,7 +122,7 @@
 <body>
 
 <div class="professional-banner" id="deadlineBanner">
-    <span><strong>Notice:</strong> We are currently accepting applications until November 1st.</span>
+    <span><strong>Notice:</strong> The submission process is on hiatus from November 1st, 2026, until January 4th, 2027. During this time, we will be accepting submissions, but will not process any applications.</span>
     <button class="close-banner-btn" onclick="document.getElementById('deadlineBanner').style.display='none'" aria-label="Dismiss banner">✖</button>
 </div>
 
