@@ -5,12 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Local Broadcast Content Submission from Independent Filmmakers</title>
     <style>
-        /* 1. Base Body & Background Image Configuration */
+        /* Base Body & Background Image Configuration */
         body { 
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; 
             color: #323130; 
             margin: 0; 
-            padding: 20px; 
+            padding: 70px 20px 20px 20px; /* Added top padding to clear the banner */
             line-height: 1.5;
             background-color: #f4f4f9; 
             background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQcVe0281RAF4y_uMsdkp0j9rzTVqbqENCYFQ&s');
@@ -23,12 +23,31 @@
             align-items: center;
         }
 
+        /* Banner CSS */
+        @keyframes slideDownBanner {
+            0% { transform: translateY(-100%); opacity: 0; }
+            100% { transform: translateY(0); opacity: 1; }
+        }
+        .professional-banner {
+            position: fixed; top: 0; left: 0; width: 100%;
+            background-color: #FFD700; color: #CC0000;
+            padding: 16px 20px; font-size: 14px; box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            display: flex; justify-content: center; align-items: center; z-index: 1000;
+            box-sizing: border-box; border-bottom: 3px solid #990000;
+            transform: translateY(-100%); opacity: 0;
+            animation: slideDownBanner 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.5s forwards;
+        }
+        .professional-banner span { margin-right: 20px; font-weight: 600; }
+        .professional-banner strong { color: #990000; font-weight: 900; margin-right: 4px; }
+        .close-banner-btn { background: transparent; border: none; color: #CC0000; font-size: 16px; cursor: pointer; padding: 0; transition: color 0.2s; font-weight: bold; display: flex; align-items: center; }
+        .close-banner-btn:hover { color: #990000; }
+
         /* Master Gateway Return Link */
         .back-link-wrapper { width: 100%; max-width: 680px; margin-bottom: 15px; }
         .back-link { color: #ffffff; font-size: 14px; text-decoration: none; font-weight: 500; text-shadow: 0 1px 4px rgba(0,0,0,0.5); transition: opacity 0.2s; }
         .back-link:hover { text-decoration: underline; opacity: 0.8; }
 
-        /* 3. Form Container & Interface Styles */
+        /* Form Container & Interface Styles */
         .form-card { max-width: 680px; width: 100%; background: #ffffff; margin: 0 auto 20px auto; padding: 40px; border-radius: 8px; box-shadow: 0 4px 16px rgba(0,0,0,0.2); border-top: 4px solid #0078d4; box-sizing: border-box;}
         .header-title { font-size: 24px; color: #0078d4; margin-top: 0; margin-bottom: 25px; font-weight: 600; }
         .question-block { margin-bottom: 28px; padding-bottom: 15px; }
@@ -46,9 +65,33 @@
         button[type="submit"]:hover { background-color: #005a9e; }
         button[type="submit"]:disabled { background-color: #c8c6c4; cursor: not-allowed; }
         .status-box { margin-top: 20px; padding: 15px; border-radius: 4px; display: none; font-weight: 600; font-size: 14px; text-align: center; }
+
+        /* Full Screen Success Overlay */
+        .success-screen {
+            display: none; 
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-color: #ffffff; z-index: 2000;
+            flex-direction: column; align-items: center; justify-content: center; text-align: center;
+            padding: 40px; box-sizing: border-box;
+            animation: fadeIn 0.5s ease forwards;
+        }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        .success-title { font-family: "Georgia", serif; font-size: 32px; color: #0078d4; margin-bottom: 20px; }
+        .success-message { font-family: "Georgia", serif; font-size: 18px; color: #323130; max-width: 600px; line-height: 1.6; margin-bottom: 40px; }
+        .success-btn {
+            background-color: #0078d4; color: #ffffff; text-decoration: none; padding: 14px 28px;
+            border-radius: 4px; font-size: 16px; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; font-weight: 600; box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            transition: background-color 0.2s;
+        }
+        .success-btn:hover { background-color: #005a9e; }
     </style>
 </head>
 <body>
+
+<div class="professional-banner" id="deadlineBanner">
+    <span><strong>Notice:</strong> The submission process is on hiatus from November 1st, 2026, until February 1st, 2027. During this time, we will be accepting submissions, but will not process any applications.</span>
+    <button class="close-banner-btn" onclick="document.getElementById('deadlineBanner').style.display='none'" aria-label="Dismiss banner">✖</button>
+</div>
 
 <div class="back-link-wrapper">
     <a href="index.html" class="back-link">← Homepage</a>
@@ -250,6 +293,13 @@
     <div id="statusAlert" class="status-box"></div>
 </div>
 
+<!-- Full Screen Success Overlay -->
+<div class="success-screen" id="successScreen">
+    <h1 class="success-title">Submission Received</h1>
+    <p class="success-message">The submission process is on hiatus from November 1st, 2026, until February 1st, 2027. During this time, we will be accepting submissions, but will not process any applications.</p>
+    <a href="index.html" class="success-btn">Return to Homepage</a>
+</div>
+
 <script>
     const FLOW_ENDPOINT_URL = "https://defaulta5d83123285c489b9a04e4206e9908.1d.environment.api.powerplatform.com:443/powerautomate/automations/direct/workflows/4a6cc8230cc8430db68ba8cf3fa37a52/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=WH5XIWOOVPN38UGeDcx04S6WYPmA20p3APjJypC3Nk4";
 
@@ -325,14 +375,15 @@
             })
             .then(response => {
                 if (response.ok) {
-                    statusAlert.style.display = "block";
-                    statusAlert.style.backgroundColor = "#d4edda";
-                    statusAlert.style.color = "#155724";
-                    statusAlert.innerText = "Submission successfully transmitted to WNET channels.";
+                    // Hide the top banner to keep the screen clean
+                    const banner = document.getElementById('deadlineBanner');
+                    if (banner) banner.style.display = 'none';
+
+                    // Trigger the full screen white overlay
+                    const successScreen = document.getElementById('successScreen');
+                    successScreen.style.display = "flex";
+                    
                     document.getElementById('submissionForm').reset();
-                    toggleField('seriesSection', false);
-                    toggleField('languageSection', false);
-                    toggleField('aiSection', false);
                 } else {
                     throw new Error("Target endpoint dropped transaction processing.");
                 }
@@ -343,11 +394,9 @@
                 statusAlert.style.color = "#721c24";
                 statusAlert.innerText = "Transmission failure. Connection dropped.";
                 console.error(error);
-            })
-            .finally(() => {
+                
                 submitBtn.disabled = false;
                 submitBtn.innerText = "Submit Content Package";
-                window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
             });
         };
 
